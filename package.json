@@ -1,0 +1,15 @@
+{
+  "name": "pixijs-testing",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild main.js --bundle --format=esm --outfile=public/build.js --serve --servedir=public"
+  },
+  "dependencies": {
+    "pixi.js": "^8.16.0"
+  }
+}
