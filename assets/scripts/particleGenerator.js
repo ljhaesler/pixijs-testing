@@ -6,9 +6,21 @@ export class ParticleGenerator {
     this.colors = particleOptions.colors || [0x000000];
     this.size = particleOptions.size || 1;
     this.alpha = particleOptions.alpha || 1;
-    this.quantity = particleOptions.quantity || 10000;
+    this.particles = particleOptions.particles || null;
+    this.quantity = particleOptions.quantity || this.particles.length;
+
     this.w = app.screen.width;
     this.h = app.screen.height;
+  }
+
+  getLocation(location) {
+    if (location) return location;
+    else return [this.w * Math.random(), this.h * Math.random()];
+  }
+
+  getColor(color) {
+    if (color) return color;
+    else return Math.floor(Math.random() * this.colors.length);
   }
 
   generateContainer() {
@@ -26,12 +38,13 @@ export class ParticleGenerator {
     const texture = app.renderer.generateTexture(particleGraphics);
 
     for (let i = 1; i < this.quantity; i++) {
-      let color = Math.floor(Math.random() * this.colors.length);
+      const location = this.getLocation(this.particles[i]?.location);
+      const color = this.getColor(this.particles[i].color);
       const particle = new Particle({
         texture,
-        x: this.w * Math.random(),
-        y: this.h * Math.random(),
-        tint: this.colors[color],
+        x: location[0],
+        y: location[1],
+        tint: color,
         alpha: this.alpha,
       });
 
