@@ -21,6 +21,7 @@ document.body.appendChild(app.canvas);
 
 export default app;
 
+// test for commit
 const imageParticleGenerator = new ParticleGenerator({
   size: 1,
   alpha: 1,
