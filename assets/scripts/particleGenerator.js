@@ -9,8 +9,8 @@ export class ParticleGenerator {
     this.particles = particleOptions.particles || null;
     this.quantity = particleOptions.quantity || this.particles.length;
 
-    this.w = app.screen.width;
-    this.h = app.screen.height;
+    this.w = app.canvas.width;
+    this.h = app.canvas.height;
   }
 
   getLocation(location) {
@@ -20,7 +20,7 @@ export class ParticleGenerator {
 
   getColor(color) {
     if (color) return color;
-    else return Math.floor(Math.random() * this.colors.length);
+    else return this.colors[Math.floor(Math.random() * this.colors.length)];
   }
 
   generateContainer() {
@@ -38,8 +38,9 @@ export class ParticleGenerator {
     const texture = app.renderer.generateTexture(particleGraphics);
 
     for (let i = 1; i < this.quantity; i++) {
-      const location = this.getLocation(this.particles[i]?.location);
-      const color = this.getColor(this.particles[i].color);
+      const singleParticle = this.particles ? this.particles[i] : null;
+      const location = this.getLocation(singleParticle?.location);
+      const color = this.getColor(singleParticle?.color);
       const particle = new Particle({
         texture,
         x: location[0],

@@ -1,6 +1,6 @@
 export async function createImageParticles(src) {
   const img = new Image();
-  img.src = "images/flowers.jpg";
+  img.src = src;
   await img.decode();
 
   const w = img.width;
@@ -24,8 +24,6 @@ export async function createImageParticles(src) {
   function createParticles() {
     const imageData = ctx.getImageData(0, 0, w, h);
 
-    console.log(imageData);
-
     let particles = [];
 
     for (let i = 0; i < imageData.data.length; i += 4) {
@@ -33,7 +31,7 @@ export async function createImageParticles(src) {
       const green = imageData.data[i + 1];
       const blue = imageData.data[i + 2];
 
-      if (red >= 80 && green <= 50) {
+      if (red > 40 && blue < 150) {
         const location = pixelLocation(i);
         particles.push({
           location,
@@ -47,5 +45,6 @@ export async function createImageParticles(src) {
   canvas.remove();
 
   let particles = createParticles();
+  console.log("particle count: " + particles.length);
   return { particles, img };
 }

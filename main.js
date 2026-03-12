@@ -3,7 +3,7 @@ import { ParticleGenerator } from "./assets/scripts/particleGenerator.js";
 import { ParticleTicker } from "./assets/scripts/particleMath.js";
 import { createImageParticles } from "./assets/scripts/createImageParticles.js";
 
-const img = await createImageParticles("images/flowers.jpg");
+const img = await createImageParticles("images/tron_legacy.jpg");
 
 // Create a new application
 const app = new Application();
@@ -21,76 +21,50 @@ document.body.appendChild(app.canvas);
 
 export default app;
 
-// test for commit
+// const randomParticleGenerator = new ParticleGenerator({
+//   colors: [0xffffff],
+//   size: 1,
+//   alpha: 1,
+//   quantity: 200,
+// });
+// const randomParticleContainer = randomParticleGenerator.generateContainer();
+// app.stage.addChild(randomParticleContainer);
+// const randomParticleTicker = new ParticleTicker(
+//   randomParticleContainer.particleChildren,
+//   {
+//     xSpd: 1,
+//     ySpd: 1,
+//     xFn: "sin",
+//     yFn: "sin",
+//     outOfBoundsType: "respawn",
+//     PIMulti: 2,
+//   },
+// );
+// randomParticleTicker.addTicker();
+
 const imageParticleGenerator = new ParticleGenerator({
-  size: 1,
+  size: 4,
   alpha: 1,
   particles: img.particles,
 });
 
 const imageParticleContainer = imageParticleGenerator.generateContainer();
 
-const transparencyAsset = await Assets.load("images/flowers.jpg");
-const transparencySprite = new Sprite(transparencyAsset);
-transparencySprite.alpha = 0.01;
-transparencySprite.position.set(0, 0);
-
-app.stage.addChild(transparencySprite);
 app.stage.addChild(imageParticleContainer);
 
 const imageParticleTicker = new ParticleTicker(
   imageParticleContainer.particleChildren,
   {
-    fft: 2048,
-    particleSpeed: 0.1,
-    outOfBoundsType: "respawn",
+    fft: 8192,
+    xSpd: 0.04,
+    ySpd: 0.005,
+    outOfBoundsType: "wrap",
     xFn: "diffModulation",
-    yFn: "cos",
-    PIMulti: 2,
+    yFn: "simpleModulation",
+    audioDataFn: "frequencyData",
+    PIMulti: 16,
   },
 );
 
 imageParticleTicker.setupAudio("audio/music.mp3");
 imageParticleTicker.addTicker();
-
-// const particleGenerator1 = new ParticleGenerator({
-//   colors: [0x0000ff, 0xff0000],
-//   size: 1,
-//   alpha: 1,
-//   quantity: 10000,
-// });
-
-// const particleGenerator2 = new ParticleGenerator({
-//   colors: [0xff00ff, 0x00ff00],
-//   size: 1,
-//   alpha: 1,
-//   quantity: 10000,
-// });
-
-// const particleContainer1 = particleGenerator1.generateContainer();
-// const particleContainer2 = particleGenerator2.generateContainer();
-
-// app.stage.addChild(particleContainer1);
-// app.stage.addChild(particleContainer2);
-
-// const particleTicker1 = new ParticleTicker(
-//   particleContainer1.particleChildren,
-//   {
-//     outOfBoundsType: "respawn",
-//     xMathFunction: "cos",
-//     yMathFunction: "sin",
-//     PIMulti: 4,
-//   },
-// );
-// const particleTicker2 = new ParticleTicker(
-//   particleContainer2.particleChildren,
-//   {
-//     outOfBoundsType: "respawn",
-//     xMathFunction: "sin",
-//     yMathFunction: "cos",
-//     PIMulti: 4,
-//   },
-// );
-
-// particleTicker1.addTicker();
-// particleTicker2.addTicker();
